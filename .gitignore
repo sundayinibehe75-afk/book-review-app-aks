@@ -1,0 +1,13 @@
+secrets-local/
+.env
+.env.*
+!.env.example
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+*.pem
+*.key
+
+# Local Kubernetes secrets
+secrets-local/
