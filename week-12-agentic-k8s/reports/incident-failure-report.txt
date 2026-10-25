@@ -1,0 +1,42 @@
+========================================
+Kubernetes Incident Triage Report
+========================================
+Full Name: Inibehe Emmanuel Sunday
+Timestamp: 2026-10-25T18:20:54Z
+Namespace: book-review
+App Label: app=backend
+Service: backend
+
+[PASS] Cluster access, namespace, and matching pod selection verified (2 pod(s))
+
+Pod status (kubectl get pods -o wide):
+  NAME                       READY   STATUS         RESTARTS   AGE     IP            NODE                                NOMINATED NODE   READINESS GATES
+  backend-77b4969d57-zw6c8   0/1     ErrImagePull   0          71s     10.224.0.32   aks-nodepool1-38081051-vmss000000   <none>           <none>
+  backend-78c9c7c7f9-scjml   1/1     Running        0          6h25m   10.224.0.19   aks-nodepool1-38081051-vmss000000   <none>           <none>
+[FAIL] One or more pods are in a bad state: backend-77b4969d57-zw6c8 ErrImagePull
+[FAIL] Pod(s) not passing readiness: backend-77b4969d57-zw6c8 (READY 0/1)
+[PASS] No pod has 5 or more restarts
+
+Recent namespace events (last 5, sorted by time):
+  34s   Normal    Pulling             pod/backend-77b4969d57-zw6c8    Pulling image "inibehe/book-review-backend:does-not-exist"
+  33s   Warning   Failed              pod/backend-77b4969d57-zw6c8    Failed to pull image "inibehe/book-review-backend:does-not-exist": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/inibehe/book-review-backend:does-not-exist": failed to resolve image: docker.io/inibehe/book-review-backend:does-not-exist: not found
+  33s   Warning   Failed              pod/backend-77b4969d57-zw6c8    Error: ErrImagePull
+  7s    Normal    BackOff             pod/backend-77b4969d57-zw6c8    Back-off pulling image "inibehe/book-review-backend:does-not-exist"
+  7s    Warning   Failed              pod/backend-77b4969d57-zw6c8    Error: ImagePullBackOff
+[WARN] Warning events are present (including historical events); confirm age and workload before attributing a cause.
+Service EndpointSlice evidence:
+Slice: backend-2bh5m Ports: 3001 
+backend-78c9c7c7f9-scjml ready=true addresses=["10.224.0.19"]
+backend-77b4969d57-zw6c8 ready=false addresses=["10.224.0.32"]
+[PASS] Service 'backend' has ready backend(s): 10.224.0.19
+
+Previous-container logs for the first non-running pod (last 10 lines):
+  Error from server (BadRequest): previous terminated container "backend" in pod "backend-77b4969d57-zw6c8" not found
+
+Summary:
+PASS: 3
+WARN: 1
+FAIL: 2
+Overall Status: FAIL
+Script Exit Code: 2
+Report File: /c/DMI/k8s-labs/book-review/week-12-agentic-k8s/reports/k8s-health-report.txt

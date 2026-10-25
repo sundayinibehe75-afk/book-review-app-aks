@@ -1,0 +1,40 @@
+========================================
+Kubernetes Incident Triage Report
+========================================
+Full Name: Inibehe Emmanuel Sunday
+Timestamp: 2026-10-25T18:27:10Z
+Namespace: book-review
+App Label: app=backend
+Service: backend
+
+[PASS] Cluster access, namespace, and matching pod selection verified (1 pod(s))
+
+Pod status (kubectl get pods -o wide):
+  NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE                                NOMINATED NODE   READINESS GATES
+  backend-78c9c7c7f9-scjml   1/1     Running   0          6h31m   10.224.0.19   aks-nodepool1-38081051-vmss000000   <none>           <none>
+[PASS] No pods reporting CrashLoopBackOff, ImagePullBackOff, ErrImagePull, Pending, ContainerCreating, Error, or Unknown
+[PASS] All matching pods report READY containers equal to desired containers
+[PASS] No pod has 5 or more restarts
+
+Recent namespace events (last 5, sorted by time):
+  5m54s   Warning   Failed              pod/backend-77b4969d57-zw6c8    Failed to pull image "inibehe/book-review-backend:does-not-exist": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/inibehe/book-review-backend:does-not-exist": failed to resolve image: docker.io/inibehe/book-review-backend:does-not-exist: not found
+  5m31s   Warning   Failed              pod/backend-77b4969d57-zw6c8    Error: ImagePullBackOff
+  5m31s   Normal    BackOff             pod/backend-77b4969d57-zw6c8    Back-off pulling image "inibehe/book-review-backend:does-not-exist"
+  5m23s   Normal    SuccessfulDelete    replicaset/backend-77b4969d57   Deleted pod: backend-77b4969d57-zw6c8
+  5m23s   Normal    ScalingReplicaSet   deployment/backend              Scaled down replica set backend-77b4969d57 from 1 to 0
+[WARN] Warning events are present (including historical events); confirm age and workload before attributing a cause.
+Service EndpointSlice evidence:
+Slice: backend-2bh5m Ports: 3001 
+backend-78c9c7c7f9-scjml ready=true addresses=["10.224.0.19"]
+[PASS] Service 'backend' has ready backend(s): 10.224.0.19
+
+Previous-container logs for the first non-running pod (last 10 lines):
+  All matching pods are Running — no previous-container logs to capture.
+
+Summary:
+PASS: 5
+WARN: 1
+FAIL: 0
+Overall Status: WARN
+Script Exit Code: 1
+Report File: /c/DMI/k8s-labs/book-review/week-12-agentic-k8s/reports/k8s-health-report.txt
