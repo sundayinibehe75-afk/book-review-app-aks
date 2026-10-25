@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: inibehe/book-review-frontend:v1
+          image: inibehe/book-review-frontend:v3
           ports:
             - containerPort: 3000
